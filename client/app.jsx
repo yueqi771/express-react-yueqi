@@ -1,8 +1,14 @@
 import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux'
-import { getUser } from './actions/index'
-
+import { bindActionCreators } from 'redux'
+import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
+import Login from './container/login/login';
+import Register from './container/register/register';
+import AuthRoute from './component/authRoute/authRoute'
+import http from './utils/http'
+import { getUser } from './actions/userAction'
+import './static/css/common.css'
 
 class App extends React.Component {
 
@@ -14,32 +20,29 @@ class App extends React.Component {
     }
     
     componentDidMount() {
-        
-        console.log(this.props.getUser())
     }
     render() {
         const { data } = this.state
-        console.log(data)
+        const { userInfo } = this.props;
         return (
-            <div className="index">
-                <p className="title">主页</p>
-
-                {/* {
-                    data.map((item, index) =>  <p key={item._id}>{item.user}</p> )
-                } */}
-            
-            </div>
+            <BrowserRouter>
+                <div className="router-container">
+                    <AuthRoute></AuthRoute>
+                    <Route path="/login" component={Login}></Route>
+                    <Route path="/register" component={Register}></Route>
+                </div>
+            </BrowserRouter>
         )
     }
 }
-const mapStatetoProps = (state) => {
+const mapStateToProps = (state) => {
     return {
-        userInfo: state
+        userInfo: state.userInfo
     }
 }
 
-const mapDispatchtoProps = () => ({
-    getUser: getUser()
+const mapDispatchToProps = (dispatch) => ({
+    getUser: bindActionCreators(getUser, dispatch)
 })
-App = connect(mapStatetoProps, mapDispatchtoProps)(App)
-export default App
+const AppContainer = connect(mapStateToProps, mapDispatchToProps)(App)
+export default AppContainer

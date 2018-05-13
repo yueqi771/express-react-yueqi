@@ -6,6 +6,8 @@ var htmlWebpackPlugin = require('html-webpack-plugin'); // 生成HTML
 // 抽离css样式，防止将样式打包在js中引起页面样式加载错乱
 var ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
 
+const proxy =  require('http-proxy-middleware')
+
 // 代码丑化
 var UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
@@ -14,6 +16,7 @@ var OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 // 错误提示
 var FriendlyErrorPlugin = require('friendly-errors-webpack-plugin')
 
+//应用代理部分
 module.exports = {
 	entry:{
 		"app":path.resolve(__dirname,'../client/index.js'),
@@ -40,8 +43,6 @@ module.exports = {
 				options: {
 		          limit: 10000,
 		          name:"[name].[hash:8].[ext]",
-		          outputPath:"static/images/",
-		          publicPath:"/"
 		        }
 			},
 			{
@@ -97,10 +98,10 @@ module.exports = {
 		port: 3000,	// 当前的端口号
 		proxy: {
 			"/api":{
-                target:"http://localhost:7000/",
+                target: "http://localhost:7000",
                 changeOrigin: true,
-                pathRewrite:{
-                    "/api": ""
+                pathRewrite: {
+                    "^/api": ""
                 }
             }
 		},
