@@ -25,4 +25,5 @@ app.listen(7000, ()=> {
     app.use 使用模块  
     res.send 返回文本
     re
+    mongod --dbpath "D:\study\mongodb\data\db"
 */

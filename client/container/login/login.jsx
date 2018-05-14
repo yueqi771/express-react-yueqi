@@ -1,38 +1,66 @@
 import React,　{ Component } from 'react';
 import { List, InputItem, WingBlank, WhiteSpace, Button } from 'antd-mobile'
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { Redirect } from 'react-router-dom';
+import { loginAction } from '../../actions/userAction';
 import bgImg from '../../static/images/yueqi.jpg'
 import './login.less'
 
 class Login extends Component {
     constructor(props){
         super(props);
-        this.login = this.login.bind(this);
+        this.register = this.register.bind(this);
+        this.handleLogin = this.handleLogin.bind(this);
+
+        this.state = {
+            user: "",
+            password: "",
+        }
+
     }
 
-    login() {
+    handleChange(key, val) {
+        this.setState({
+            [key]: val
+        })
+    }
+
+    handleLogin() {
+        this.props.login(this.state)
+    }
+
+    register() {
         this.props.history.push('/register')
     }
     render() {
         return(
             <div className="login-wrapper" style={{ background: `url(${bgImg})` }}>
-
+                { this.props.userInfo.redirectTo != '' ? <Redirect to={this.props.userInfo.redirectTo} /> : null}
+                
                 <div className="login">
                     <h2 className="title">登录</h2>
                 
                     <WingBlank className="container">
                         
                         <List>
-                            <InputItem className="border">用户名</InputItem>
-                            <InputItem>密码</InputItem>
+                            <InputItem className="border" onChange={e => this.handleChange('user', e)}>用户名</InputItem>
+                            <InputItem type="password" onChange={e => this.handleChange('password', e)}>密码</InputItem>
                         </List>
 
                         <WhiteSpace />
                         <WhiteSpace />
+                        { 
+                            this.props.userInfo.message != '' ? 
+                            <p className="error-tip">{this.props.userInfo.message}</p> : null
+                        }
+                        <WhiteSpace />
+                        <WhiteSpace />
                         <WhiteSpace />
                                                 
-                        <Button type="primary" className="login-btn">登录</Button>
+                        <Button type="primary" className="login-btn" onClick={this.handleLogin}>登录</Button>
                         <WhiteSpace />
-                        <Button type="primary" onClick={this.login}>注册</Button>
+                        <Button type="primary" onClick={this.register}>注册</Button>
                     </WingBlank>
                 </div>
             </div>
@@ -40,4 +68,14 @@ class Login extends Component {
     }
 }
 
-export default Login
+const mapStateToProps = (state) => ({
+    userInfo: state.userInfo
+})
+
+const mapDispatchToProps = (dispatch) => ({
+    login: bindActionCreators(loginAction, dispatch)
+})
+
+const LoginContainer = connect(mapStateToProps, mapDispatchToProps)(Login)
+
+export default LoginContainer

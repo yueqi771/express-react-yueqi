@@ -23,7 +23,6 @@ class App extends React.Component {
     }
     render() {
         const { data } = this.state
-        const { userInfo } = this.props;
         return (
             <BrowserRouter>
                 <div className="router-container">
@@ -35,14 +34,6 @@ class App extends React.Component {
         )
     }
 }
-const mapStateToProps = (state) => {
-    return {
-        userInfo: state.userInfo
-    }
-}
 
-const mapDispatchToProps = (dispatch) => ({
-    getUser: bindActionCreators(getUser, dispatch)
-})
-const AppContainer = connect(mapStateToProps, mapDispatchToProps)(App)
-export default AppContainer
+
+export default App

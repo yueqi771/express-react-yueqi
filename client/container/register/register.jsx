@@ -2,6 +2,7 @@ import React,　{ Component } from 'react';
 import { List, InputItem, WingBlank, WhiteSpace, Button } from 'antd-mobile';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import { register } from '../../actions/userAction'
 import bgImg from '../../static/images/yueqi.jpg'
 import './register.less'
@@ -12,12 +13,12 @@ class Register extends Component {
         this.register = this.register.bind(this);
         this.handleRegister = this.handleRegister.bind(this);
 
-        console.log(this.props.userInfo)
 
         this.state = {
             user: '',
             password: '',
             repassword: '',
+            type: 1
         }
     }
 
@@ -37,6 +38,7 @@ class Register extends Component {
     render() {
         return(
             <div className="register-wrapper" style={{ background: `url(${bgImg})` }}>
+                { this.props.userInfo.redirectTo != '' ? <Redirect to={this.props.userInfo.redirectTo} /> : null}
                 <div className="register">
                     <h2 className="title">注册</h2>
                     

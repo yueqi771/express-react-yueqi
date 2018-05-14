@@ -1,17 +1,22 @@
-import { error_message, register_success } from "../actions/userAction";
+import { error_message, register_success, login_success, updated_user } from "../actions/userAction";
+import { getRedirectPath } from '../utils/redirect'
 
 const initState = {
 	isLogin: false,
 	user: '葛清霏',
-    password: '',
     message: '',
     type: 1,
+    redirectTo: ''
 }
 
 const userInfo = (state = initState, action) => {
 	switch (action.type) {
+        case 'UPDATE_USER': 
+            return { ...state, ...action.data }
 		case 'REGISTER_SUCCESS':
-			return { ...state, ...action.data, isLogin: true, message: '' };
+            return { ...state, ...action.data, isLogin: true, message: '注册成功', redirectTo: getRedirectPath(action.data) };
+        case 'LOGIN_SUCCESS':
+			return { ...state, ...action.data, isLogin: true, message: '注册成功', redirectTo: getRedirectPath(action.data) };
 		case 'ERROR_MESSAGE':
 			return { ...state, isLogin: false, message: action.message };
 		default:
