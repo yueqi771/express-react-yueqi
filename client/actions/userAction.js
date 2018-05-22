@@ -4,7 +4,10 @@ import qs from 'qs';
 export const register_success = (userInfo) => { return { type: 'REGISTER_SUCCESS', data: userInfo }};
 export const login_success = (userInfo) => { return { type: 'LOGIN_SUCCESS', data: userInfo }};
 export const error_message = (msg) => { return { type: 'ERROR_MESSAGE', message: msg } };
+export const update_info = (userInfo) => { return { type: 'UPDATEINFO', userInfo: userInfo }}
 export const logout = (userInfo) => { type: 'LOGOUT', userInfo };
+
+
 // 更新用户信息
 export const update_user = (userInfo) => { return { type: 'UPDATE_USER', data: userInfo } }
 
@@ -48,4 +51,16 @@ export const loginAction = ({user, password}) => {
     }
 }
 
+// 更新用户信息
+export const saveInfo = (data) => {
+    return dispatch => {
+        axios.post('/api/user/saveInfo', qs.stringify(data)).then((res) => {
+            if(res.data.code == 1) {
+                dispatch(update_info(res.data.data))
+            }else{
+                dispatch(error_message(res.data.msg))
+            }
+        })
+    }
+}
 

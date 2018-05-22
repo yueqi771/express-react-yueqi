@@ -12,7 +12,7 @@ const initState = {
 const userInfo = (state = initState, action) => {
 	switch (action.type) {
         case 'UPDATE_USER': 
-            return { ...state, ...action.data }
+            return { ...state, ...action.data, isLogin: true, message: '保存成功', redirectTo: getRedirectPath(action.data) }
 		case 'REGISTER_SUCCESS':
             return { ...state, ...action.data, isLogin: true, message: '注册成功', redirectTo: getRedirectPath(action.data) };
         case 'LOGIN_SUCCESS':

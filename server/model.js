@@ -12,7 +12,7 @@ const models = {
         'user': { type: String, require: true },
         'password': { type: String, require: true },
         'type': { type: String, require: true } ,
-        'avatar': { type: String },
+        'avatar': {  },
         'age': { type: String },
         'desc': { type: String },
         'title': { type: String },

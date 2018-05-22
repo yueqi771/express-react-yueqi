@@ -11,7 +11,7 @@ class AuthRoute extends Component {
         /* 获取用户信息 判断用户权限 */
         axios.get('/api/user/info').then((res) => {
             if(res.status == 200) {
-                const publicList = ['/login', 'register'];
+                const publicList = ['/login', '/register'];
                 let pathname = this.props.location.pathname;
                 
                 if(publicList.indexOf(pathname) > -1) {
@@ -21,6 +21,8 @@ class AuthRoute extends Component {
                 if(res.data.code == 1){
                     // 登录状态下更新用户信息
                     this.props.dispatch(update_user(res.data.data))
+                    this.props.history.push('/bossInfo')
+                    
                 }else{
                     // 跳转到首页
                     this.props.history.push('/login')

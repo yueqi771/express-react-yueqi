@@ -60,9 +60,14 @@ Router.post('/login', (req, res) => {
         return res.json({code: 1, data: doc})
     })
 })
+
+/*
+*  func: 获取用户信息
+*  @params: user，password, type
+*  author: wangdongxu
+*/
 Router.get('/info', (req, res) => {
     const {userId} = req.cookies;
-    console.log(userId)
     if(!userId){
         // 用户未登录， 重新登录
         return res.json({code: 0})
@@ -78,9 +83,37 @@ Router.get('/info', (req, res) => {
     })
 })
 
+/*
+*  func: 完善用户信息
+*  @params: user，password, type
+*  author: wangdongxu
+*/
+Router.post('/saveInfo', (req, res) => {
+    const userId = req.cookies.userId;
+    if(!userId) {
+        return json.dumps({ code: 0, message: '服务器繁忙，保存失败' })
+    }
+
+    const body = req.body;
+
+    User.findByIdAndUpdate(userId, body, (err, doc) => {
+        console.log(err)
+        if(err) {
+            return res.json({ code: 0, message: '系统繁忙，请稍后再试' })
+        }
+        const data = Object.assign({}, {
+            user: doc.user,
+            type: doc.type
+        }, body)
+
+        return res.json({ code: 1, data })
+    })
+})
+
+
 function md5Pwd(password){
     const salt = 'yueqi_is_three_44564@sdf#$%#$%@#$~';
     return utility.md5(utility.md5(password + salt))
 }
-
+ 
 module.exports = Router;
