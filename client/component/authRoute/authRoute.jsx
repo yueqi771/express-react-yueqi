@@ -7,7 +7,6 @@ import axios from 'axios';
 
 class AuthRoute extends Component {
     componentDidMount() {
-        console.log(this.props)
         /* 获取用户信息 判断用户权限 */
         axios.get('/api/user/info').then((res) => {
             if(res.status == 200) {

@@ -3,7 +3,7 @@ import { getRedirectPath } from '../utils/redirect'
 
 const initState = {
 	isLogin: false,
-	user: '葛清霏',
+	user: '',
     message: '',
     type: 1,
     redirectTo: ''
@@ -18,7 +18,10 @@ const userInfo = (state = initState, action) => {
         case 'LOGIN_SUCCESS':
 			return { ...state, ...action.data, isLogin: true, message: '注册成功', redirectTo: getRedirectPath(action.data) };
 		case 'ERROR_MESSAGE':
-			return { ...state, isLogin: false, message: action.message };
+            return { ...state, isLogin: false, message: action.message };
+        
+        case 'LOGOUT':
+            return { ...initState, redirectTo: '/login' }
 		default:
 			return state
 	}

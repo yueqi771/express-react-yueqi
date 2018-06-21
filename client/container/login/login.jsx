@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Redirect } from 'react-router-dom';
 import { loginAction } from '../../actions/userAction';
+import Form from '../../component/Form'
 import bgImg from '../../static/images/yueqi.jpg'
 import './login.less'
 
@@ -20,14 +21,8 @@ class Login extends Component {
 
     }
 
-    handleChange(key, val) {
-        this.setState({
-            [key]: val
-        })
-    }
-
     handleLogin() {
-        this.props.login(this.state)
+        this.props.login(this.props.state)
     }
 
     register() {
@@ -44,8 +39,8 @@ class Login extends Component {
                     <WingBlank className="container">
                         
                         <List>
-                            <InputItem className="border" onChange={e => this.handleChange('user', e)}>用户名</InputItem>
-                            <InputItem type="password" onChange={e => this.handleChange('password', e)}>密码</InputItem>
+                            <InputItem className="border" onChange={e => this.props.handleChange('user', e)}>用户名</InputItem>
+                            <InputItem type="password" onChange={e => this.props.handleChange('password', e)}>密码</InputItem>
                         </List>
 
                         <WhiteSpace />
@@ -76,6 +71,6 @@ const mapDispatchToProps = (dispatch) => ({
     login: bindActionCreators(loginAction, dispatch)
 })
 
-const LoginContainer = connect(mapStateToProps, mapDispatchToProps)(Login)
+const LoginContainer = Form(connect(mapStateToProps, mapDispatchToProps)(Login))
 
 export default LoginContainer

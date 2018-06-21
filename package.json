@@ -23,6 +23,7 @@
     "antd-mobile-demo-data": "^0.2.0",
     "axios": "^0.17.1",
     "body-parser": "^1.18.2",
+    "browser-cookies": "^1.2.0",
     "cookie-parser": "^1.4.3",
     "css-loader": "^0.28.7",
     "express": "^4.16.3",
@@ -39,6 +40,8 @@
     "react-router-dom": "^4.2.2",
     "redux": "^4.0.0",
     "redux-thunk": "^2.2.0",
+    "socket.io": "^2.1.1",
+    "socket.io-client": "^2.1.1",
     "utility": "^1.13.1"
   },
   "devDependencies": {

@@ -7,8 +7,9 @@ const User = model.getModel('user');
 const _filter = {'password': 0, '__v': 0}
 
 Router.get('/list', (req, res) => {
-    User.find({}, (err, doc) => {
-        return res.json(doc)
+    const type = req.query.type;
+    User.find({type}, (err, doc) => {
+        return res.json({ code:1, data: doc })
     })
 })
 
